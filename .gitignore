@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# TI Z-Stack
+CoordinatorEB
+RouterEB
+DemoEB
+EndDeviceEB
