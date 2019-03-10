@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=200432608
+Checksum=1451582205
 [DisAssemblyWindow]
 NumStates=_ 1
 State 1=_ 1
@@ -30,7 +30,5 @@ Category=_ 0
 LoggingEnabled=_ 0
 LogFile=_ ""
 [Aliases]
-A0=_ "C:\Users\Leo\Desktop\ZigbeeDemo\Endpoint\Components\osal\common\OSAL_Memory.c" ""
-A1=_ "C:\Users\Leo\Desktop\ZigbeeDemo\Endpoint\Projects\zstack\ZMain\TI2530DB\ZMain.c" "C:\Users\Leo\Desktop\ZStack\Projects\zstack\ZMain\TI2530DB\ZMain.c"
-Count=2
+Count=0
 SuppressDialog=0
