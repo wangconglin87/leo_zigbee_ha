@@ -60,6 +60,8 @@ uint8 SampleApp_TransID;  // This is the unique message ID (counter)
 afAddrType_t SampleApp_Periodic_DstAddr;
 afAddrType_t SampleApp_Flash_DstAddr;
 
+afAddrType_t Leo_P2P_DstAddr;
+
 aps_Group_t SampleApp_Group;
 
 uint8 SampleAppPeriodicCounter = 0;
@@ -104,7 +106,10 @@ void SampleApp_Init( uint8 task_id )
   SampleApp_Periodic_DstAddr.addrMode = (afAddrMode_t)AddrBroadcast;
   SampleApp_Periodic_DstAddr.endPoint = SAMPLEAPP_ENDPOINT;
   SampleApp_Periodic_DstAddr.addr.shortAddr = 0xFFFF;
-	
+  
+  Leo_P2P_DstAddr.addrMode = (afAddrMode_t) Addr16Bit;
+  Leo_P2P_DstAddr.endPoint = SAMPLEAPP_ENDPOINT;
+  
 	// Fill out the endpoint description.
 	SampleApp_epDesc.endPoint = SAMPLEAPP_ENDPOINT;
 	SampleApp_epDesc.task_id = &SampleApp_TaskID;
@@ -218,13 +223,22 @@ static void Handle_UartEvent(uint8 port, uint8 event) {
             if (rxbuf != NULL) {
                 HalUARTRead(HAL_UART_PORT_0, rxbuf, rxbuflen);
                 //HalUARTWrite(HAL_UART_PORT_0, rxbuf, rxbuflen);
-                AF_DataRequest( &SampleApp_Periodic_DstAddr, &SampleApp_epDesc,
+				switch ( rxbuf[0] )
+				{
+				case 127:
+					osal_memcpy(&Leo_P2P_DstAddr.addr.shortAddr, &rxbuf[1], 2);
+					AF_DataRequest(&Leo_P2P_DstAddr, &SampleApp_epDesc,
 							   LEO_CLUSTERID,
-							   rxbuflen,
-							   rxbuf,
+							   1,
+							   &rxbuf[3],
 							   &SampleApp_TransID,
 							   AF_DISCV_ROUTE,
 							   AF_DEFAULT_RADIUS);
+					break;
+				case 1: 
+					HalUARTWrite(HAL_UART_PORT_0, rxbuf, rxbuflen);
+					break;
+				}
             }
 			
             osal_mem_free(rxbuf);

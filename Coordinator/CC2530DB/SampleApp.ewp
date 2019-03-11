@@ -1332,6 +1332,7 @@
         <option>
           <name>CCDefines</name>
           <state>ZTOOL_P1</state>
+          <state>NC_RESTORE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
